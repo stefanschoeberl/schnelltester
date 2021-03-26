@@ -1,0 +1,11 @@
+!.idea/
+.idea/*
+!.idea/runConfigurations
+
+*.iws
+*.iml
+*.ipr
+/out/
+
+extension/dist/
+extension/node_modules/

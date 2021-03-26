@@ -1,0 +1,30 @@
+{
+  "name": "schnelltester",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build-dev": "UI_MODE=dev webpack --config webpack.config.js --mode=production",
+    "build-prod": "UI_MODE=prod webpack --config webpack.config.js --mode=production"
+  },
+  "author": "Stefan Schöberl",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/chrome": "0.0.133",
+    "@types/react": "17.0.2",
+    "@types/react-dom": "17.0.1",
+    "copy-webpack-plugin": "7.0.0",
+    "css-loader": "^.1.1",
+    "style-loader": "2.0.0",
+    "ts-loader": "8.0.17",
+    "typescript": "4.2.2",
+    "webpack": "5.24.3",
+    "webpack-cli": "4.5.0",
+    "zip-webpack-plugin": "4.0.1"
+  },
+  "dependencies": {
+    "bootstrap": "5.0.0-beta2",
+    "react": "17.0.1",
+    "react-dom": "17.0.1"
+  }
+}
