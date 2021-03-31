@@ -4,10 +4,15 @@ Schnelltester helps you to register for COVID-19 tests by storing your data loca
 
 ![Screenshot Extension](img/demo-screenshot.png)
 
+## Data storage information
+
+All personal data is stored locally in the browser (Chrome offers a dedicated area for extensions) and is never synced or uploaded to anywhere.
+
 ## Installation
 
 ### via Chrome Web Store
-coming soon...
+
+Download [here](https://chrome.google.com/webstore/detail/kjjnndnifooahialjiligenpnkdfkije)
 
 ### build or install locally
 
