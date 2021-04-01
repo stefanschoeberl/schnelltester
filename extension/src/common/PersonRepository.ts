@@ -20,7 +20,7 @@ export function setPersons(persons: Person[]) {
     chrome.storage.local.set({persons: persons});
 }
 
-export async function deletePeronAt(index: number) {
+export async function deletePersonAt(index: number) {
     const persons = await getPersons();
     persons.splice(index, 1);
     await setPersons(persons);
