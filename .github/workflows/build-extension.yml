@@ -1,0 +1,19 @@
+name: Build Extension
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: npm install and build
+        run: |
+          cd extension
+          npm install
+          npm run build-prod
+      - name: Archive schnelltester.zip
+        uses: actions/upload-artifact@v2
+        with:
+          name: extension-zip-file
+          path: extension/dist/schnelltester.zip
