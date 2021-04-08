@@ -15,5 +15,5 @@ jobs:
       - name: Archive schnelltester.zip
         uses: actions/upload-artifact@v2
         with:
-          name: extension-zip-file
+          name: extension
           path: extension/dist/schnelltester.zip
