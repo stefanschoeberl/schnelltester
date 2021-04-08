@@ -1,18 +1,19 @@
-import {Message} from "../common/Message";
+import {Message, MissingData} from "../common/Message";
 import {ContactType, Gender, Person} from "../common/Person";
 import {getPersons, setPersons} from "../common/PersonRepository";
+import {supportedPages} from "../util/supportedPages";
 
-chrome.runtime.onMessage.addListener((message: Message, sender, sendResponse) => {
+const currentPageInfo = supportedPages.find((page) => window.location.href.match(page.regex))!!;
+
+chrome.runtime.onMessage.addListener((message: Message) => {
     switch (message.type) {
         case "fill":
             fillForm(message.personIndex);
             break;
         case "save":
-            saveForm();
+            saveForm(message.missingData);
             break;
     }
-
-    console.log("got message");
 });
 
 function setTextfieldById(id: string, value: string) {
@@ -124,16 +125,18 @@ async function fillForm(personIndex: number) {
             break;
     }
 
-    if (person.educationPersonal) {
-        setRadioByValue("true", true);
-    } else {
-        setRadioByValue("false", true);
+    if (currentPageInfo.withEducationPersonal) {
+        if (person.educationPersonal) {
+            setRadioByValue("true", true);
+        } else {
+            setRadioByValue("false", true);
+        }
     }
 
     setSexDropdown(person.gender);
 }
 
-async function saveForm() {
+async function saveForm(missingData: MissingData | undefined) {
 
     const gender = getSexDropdown();
     if (gender === undefined) {
@@ -147,10 +150,15 @@ async function saveForm() {
         return;
     }
 
-    const educationPersonal = getEducationPersonal();
-    if (educationPersonal === undefined) {
-        alert('Fehler bei: "Gehören Sie zum Bildungspersonal in Österreich?" - Speichern fehlgeschlagen!');
-        return;
+    let educationPersonal: boolean | undefined;
+    if (currentPageInfo.withEducationPersonal) {
+        educationPersonal = getEducationPersonal();
+        if (educationPersonal === undefined) {
+            alert('Fehler bei: "Gehören Sie zum Bildungspersonal in Österreich?" - Speichern fehlgeschlagen!');
+            return;
+        }
+    } else {
+        educationPersonal = missingData!!.educationPersonal!!;
     }
 
     const person: Person = {

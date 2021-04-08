@@ -18,7 +18,8 @@
         "https://kaernten.oesterreich-testet.at/*",
         "https://steiermark.oesterreich-testet.at/*",
         "https://ooe.oesterreich-testet.at/*",
-        "https://burgenland.oesterreich-testet.at/*"
+        "https://burgenland.oesterreich-testet.at/*",
+        "https://apotheken.oesterreich-testet.at/*"
       ],
       "js": [
         "content.bundle.js"

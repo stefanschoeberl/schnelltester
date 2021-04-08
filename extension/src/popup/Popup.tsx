@@ -2,43 +2,49 @@ import {Person} from "../common/Person";
 import React from "react";
 import {deletePersonAt, getPersons} from "../common/PersonRepository";
 import {addOnChangedListener, removeOnChangedListener} from "../util/storage";
-import {isCurrentPageSupported, openTab, sendMessageToCurrentTab} from "./utils";
-import {supportedPages} from "../util/supportedPages";
+import {getCurrentPageInfo, openTab, sendMessageToCurrentTab} from "./utils";
+import {supportedPages, TestPage} from "../util/supportedPages";
 import {UIMode, uiMode} from "../util/uiMode";
 import {DevelopmentArea} from "./DevelopmentArea";
 import {PersonList} from "./PersonList";
+import {MissingData} from "../common/Message";
+import {SaveArea} from "./SaveArea";
 
 async function fillPerson(index: number) {
     await sendMessageToCurrentTab({type: "fill", personIndex: index});
 }
 
-async function savePerson() {
-    await sendMessageToCurrentTab({type: "save"});
+async function savePerson(missingData?: MissingData) {
+    await sendMessageToCurrentTab({type: "save", missingData: missingData});
 }
 
 export class Popup extends React.Component<{}, {
     persons: Array<Person>,
-    pageSupported: boolean,
+    pageInfo?: TestPage,
 }> {
 
     constructor(p: {}) {
         super(p);
         this.state = {
             persons: [],
-            pageSupported: false,
+            pageInfo: undefined,
         }
     }
 
     async componentDidMount() {
         addOnChangedListener(this.reloadData);
         this.setState({
-            pageSupported: await isCurrentPageSupported()
+            pageInfo: await getCurrentPageInfo()
         });
         await this.reloadData();
     }
 
     componentWillUnmount() {
         removeOnChangedListener(this.reloadData);
+    }
+
+    isPageSupported() {
+        return this.state.pageInfo !== undefined;
     }
 
     reloadData = async () => {
@@ -57,9 +63,11 @@ export class Popup extends React.Component<{}, {
     }
 
     renderContent() {
-        if (this.state.pageSupported) {
+        if (this.isPageSupported()) {
             return <>
-                <button onClick={savePerson} type="button" className="btn btn-success w-100 mt-3">Eingegebene Daten speichern</button>
+                <SaveArea
+                    promptForEducationPersonal={this.state.pageInfo !== undefined && !this.state.pageInfo.withEducationPersonal}
+                    onSave={savePerson}/>
                 <h2 className="mt-3">Gespeicherte Personen</h2>
                 <PersonList persons={this.state.persons}
                             onFill={fillPerson}
@@ -77,7 +85,7 @@ export class Popup extends React.Component<{}, {
             return <>
                 <h2 className="mt-3">Anmeldung starten</h2>
                 {this.renderBookmarkSection()}
-                <p className="mt-3"><b>Hinweis:</b> Derzeit unterstützt der Schnelltester Apotheken, die Bundesländer Niederösterreich, Salzburg, Tirol, Vorarlberg, Wien und die Burgenländischen Impf- und Testzentren (BITZ) <b>nicht</b>.</p>
+                <p className="mt-3"><b>Hinweis:</b> Derzeit unterstützt der Schnelltester die Bundesländer Niederösterreich, Salzburg, Tirol, Vorarlberg, Wien und die Burgenländischen Impf- und Testzentren (BITZ) <b>nicht</b>.</p>
             </>;
         }
     }

@@ -1,16 +1,16 @@
 import {Message} from "../common/Message";
-import {supportedPages} from "../util/supportedPages";
+import {supportedPages, TestPage} from "../util/supportedPages";
 
 export function openTab(url: string) {
     chrome.tabs.create({url: url});
 }
 
-export async function isCurrentPageSupported(): Promise<boolean> {
-    let [tab] = await chrome.tabs.query({active: true, currentWindow: true});
+export async function getCurrentPageInfo(): Promise<TestPage|undefined> {
+    const [tab] = await chrome.tabs.query({active: true, currentWindow: true});
     if (tab.id) {
-        return supportedPages.find((page) => tab.url!!.match(page.regex)) !== undefined;
+        return supportedPages.find((page) => tab.url!!.match(page.regex));
     } else {
-        return false;
+        return undefined;
     }
 }
 
