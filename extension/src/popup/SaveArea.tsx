@@ -50,7 +50,7 @@ export class SaveArea extends React.Component<SaveAreaProps, SaveAreaState> {
             case "visible":
                 return <>
                     {saveButton}
-                    <p className="mt-3">Manche Anmeldeseiten (Burgenland Gemeinden, Oberösterreich und Steiermark) fragen nach zusätzlichen Informationen, die im aktuellen Anmeldeformular nicht erfasst werden. Nachfolgend können diese Informationen ergänzt werden, damit die gespeicherte Person auch auf anderen Anmeldeseiten verwendet werden kann.</p>
+                    <p className="mt-3">Manche Anmeldeseiten (Burgenland Gemeinden, Kärnten, Oberösterreich und Steiermark) fragen nach zusätzlichen Informationen, die im aktuellen Anmeldeformular nicht erfasst werden. Nachfolgend können diese Informationen ergänzt werden, damit die gespeicherte Person auch auf anderen Anmeldeseiten verwendet werden kann.</p>
                     <p className="mt-3 mb-1">Gehören Sie zum Bildungspersonal in Österreich? <span className="text-danger">*</span></p>
                     <div className="form-check form-check-inline">
                         <input className="form-check-input" type="radio"
