@@ -99,8 +99,9 @@ export class Popup extends React.Component<{}, {
     }
 
     render() {
+        const flag = <img src="austria-flag.svg" alt="Österreich Flagge" style={{width: "1.2em", verticalAlign: "baseline"}} />
         return <div className="p-3" style={{cursor: "default", userSelect: "none"}}>
-            <h1 className="text-center position-relative">🇦🇹 Schnelltester
+            <h1 className="text-center position-relative">{flag} Schnelltester
                 {uiMode === UIMode.Development && <span className="badge bg-info position-absolute top-0 end-0">DEV</span>}
             </h1>
             {this.renderContent()}
