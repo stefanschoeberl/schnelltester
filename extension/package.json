@@ -10,7 +10,7 @@
   "author": "Stefan Schöberl",
   "license": "MIT",
   "devDependencies": {
-    "@types/chrome": "0.0.134",
+    "@types/chrome": "0.0.137",
     "@types/react": "17.0.3",
     "@types/react-dom": "17.0.3",
     "copy-webpack-plugin": "8.1.1",
