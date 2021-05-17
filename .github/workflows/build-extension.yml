@@ -7,11 +7,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: npm install and build
+      - name: Install dependencies
         run: |
           cd extension
           npm install
+      - name: Lint
+        run: |
+          cd extension
           npm run lint
+      - name: Build
+        run: |
+          cd extension
           npm run build-prod
       - name: Archive schnelltester.zip
         uses: actions/upload-artifact@v2
