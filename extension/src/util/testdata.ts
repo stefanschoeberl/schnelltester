@@ -18,7 +18,6 @@ const persons: Person[] = [
         "mobileNumberForNotification": "01123456789",
         "email": "max.mustermann@example.com",
         "contact": ContactType.Email,
-        "educationPersonal": false
     },
     {
         "firstName": "Maria",
@@ -36,7 +35,6 @@ const persons: Person[] = [
         "mobileNumberForNotification": "09987654321",
         "email": "maria.musterfrau@example.com",
         "contact": ContactType.SMS,
-        "educationPersonal": true
     }
 ]
 

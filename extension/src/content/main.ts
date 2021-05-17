@@ -1,9 +1,6 @@
-import {Message, MissingData} from "../common/Message";
+import {Message} from "../common/Message";
 import {ContactType, Gender, Person} from "../common/Person";
 import {getPersons, setPersons} from "../common/PersonRepository";
-import {supportedPages} from "../util/supportedPages";
-
-const currentPageInfo = supportedPages.find((page) => window.location.href.match(page.regex))!!;
 
 chrome.runtime.onMessage.addListener((message: Message) => {
     switch (message.type) {
@@ -11,7 +8,7 @@ chrome.runtime.onMessage.addListener((message: Message) => {
             fillForm(message.personIndex);
             break;
         case "save":
-            saveForm(message.missingData);
+            saveForm();
             break;
     }
 });
@@ -52,16 +49,6 @@ function getContactType(): ContactType | undefined {
         return ContactType.Email;
     } else if (getRadioByValue("Sms")) {
         return ContactType.SMS;
-    } else {
-        return undefined;
-    }
-}
-
-function getEducationPersonal(): boolean | undefined {
-    if (getRadioByValue("true")) {
-        return true;
-    } else if (getRadioByValue("false")) {
-        return false;
     } else {
         return undefined;
     }
@@ -125,18 +112,10 @@ async function fillForm(personIndex: number) {
             break;
     }
 
-    if (currentPageInfo.withEducationPersonal) {
-        if (person.educationPersonal) {
-            setRadioByValue("true", true);
-        } else {
-            setRadioByValue("false", true);
-        }
-    }
-
     setSexDropdown(person.gender);
 }
 
-async function saveForm(missingData: MissingData | undefined) {
+async function saveForm() {
 
     const gender = getSexDropdown();
     if (gender === undefined) {
@@ -148,17 +127,6 @@ async function saveForm(missingData: MissingData | undefined) {
     if (contact === undefined) {
         alert('Fehler bei: "Bitte teilen Sie uns mit, wie wir Sie für die Anmeldung kontaktieren sollen." - Speichern fehlgeschlagen!');
         return;
-    }
-
-    let educationPersonal: boolean | undefined;
-    if (currentPageInfo.withEducationPersonal) {
-        educationPersonal = getEducationPersonal();
-        if (educationPersonal === undefined) {
-            alert('Fehler bei: "Gehören Sie zum Bildungspersonal in Österreich?" - Speichern fehlgeschlagen!');
-            return;
-        }
-    } else {
-        educationPersonal = missingData!!.educationPersonal!!;
     }
 
     const person: Person = {
@@ -177,7 +145,6 @@ async function saveForm(missingData: MissingData | undefined) {
         mobileNumberForNotification: getTextfieldById("MobileNumber"),
         email: getTextfieldById("Email"),
         contact: contact,
-        educationPersonal: educationPersonal
     }
 
     const persons = await getPersons();

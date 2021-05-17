@@ -7,15 +7,13 @@ import {supportedPages, TestPage} from "../util/supportedPages";
 import {UIMode, uiMode} from "../util/uiMode";
 import {DevelopmentArea} from "./DevelopmentArea";
 import {PersonList} from "./PersonList";
-import {MissingData} from "../common/Message";
-import {SaveArea} from "./SaveArea";
 
 async function fillPerson(index: number) {
     await sendMessageToCurrentTab({type: "fill", personIndex: index});
 }
 
-async function savePerson(missingData?: MissingData) {
-    await sendMessageToCurrentTab({type: "save", missingData: missingData});
+async function savePerson() {
+    await sendMessageToCurrentTab({type: "save"});
 }
 
 export class Popup extends React.Component<{}, {
@@ -65,9 +63,8 @@ export class Popup extends React.Component<{}, {
     renderContent() {
         if (this.isPageSupported()) {
             return <>
-                <SaveArea
-                    promptForEducationPersonal={this.state.pageInfo !== undefined && !this.state.pageInfo.withEducationPersonal}
-                    onSave={savePerson}/>
+                <button onClick={savePerson} type="button"
+                        className="btn btn-success w-100 mt-3">Eingegebene Daten speichern</button>
                 <h2 className="mt-3">Gespeicherte Personen</h2>
                 <PersonList persons={this.state.persons}
                             onFill={fillPerson}

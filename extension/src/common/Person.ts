@@ -25,5 +25,4 @@ export interface Person {
     mobileNumberForNotification: string,
     email: string,
     contact: ContactType,
-    educationPersonal: boolean
 }
