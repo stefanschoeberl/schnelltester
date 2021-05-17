@@ -2,14 +2,14 @@ import React from "react";
 import {Person} from "../common/Person";
 
 type PersonEntryProps = {
-    person: Person,
-    index: number,
-    showDeleteConfirmation: boolean,
-    onFill: () => void,
-    onPromptDelete: () => void,
-    onAbortDelete: () => void,
-    onDelete: () => void,
-}
+    person: Person;
+    index: number;
+    showDeleteConfirmation: boolean;
+    onFill: () => void;
+    onPromptDelete: () => void;
+    onAbortDelete: () => void;
+    onDelete: () => void;
+};
 
 class PersonEntry extends React.Component<PersonEntryProps, {}> {
 
@@ -26,7 +26,7 @@ class PersonEntry extends React.Component<PersonEntryProps, {}> {
                             className="btn btn-secondary btn-sm">Nein
                     </button>
                 </div>
-            </div>
+            </div>;
     }
 
     render() {
@@ -44,19 +44,19 @@ class PersonEntry extends React.Component<PersonEntryProps, {}> {
                 </div>
             </div>
             {this.props.showDeleteConfirmation && this.renderDeleteConfirmation()}
-        </div>
+        </div>;
     }
 }
 
 type PersonListProps = {
-    persons: Array<Person>,
-    onFill: (personIndex: number) => void
-    onDelete: (personIndex: number) => void,
-}
+    persons: Person[];
+    onFill: (personIndex: number) => void;
+    onDelete: (personIndex: number) => void;
+};
 
 type PersonListState = {
-    deleteConfirmationIndex?: number,
-}
+    deleteConfirmationIndex?: number;
+};
 
 export class PersonList extends React.Component<PersonListProps, PersonListState> {
 
@@ -74,20 +74,21 @@ export class PersonList extends React.Component<PersonListProps, PersonListState
 
     hideDeleteConfirmation() {
         this.setState({
-            deleteConfirmationIndex: undefined
+            deleteConfirmationIndex: undefined,
         });
     }
 
     showDeleteConfirmation(index: number) {
         this.setState({
-            deleteConfirmationIndex: index
+            deleteConfirmationIndex: index,
         });
     }
 
     render() {
         return <div className="list-group">
             {this.props.persons.map((person, index) => (
-                <PersonEntry person={person} index={index}
+                <PersonEntry key={`${person.firstName}-${person.lastName}-${index}`}
+                             person={person} index={index}
                              showDeleteConfirmation={this.state.deleteConfirmationIndex === index}
                              onFill={() => this.props.onFill(index)}
                              onPromptDelete={() => this.showDeleteConfirmation(index)}

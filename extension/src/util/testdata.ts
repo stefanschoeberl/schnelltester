@@ -35,8 +35,8 @@ const persons: Person[] = [
         "mobileNumberForNotification": "09987654321",
         "email": "maria.musterfrau@example.com",
         "contact": ContactType.SMS,
-    }
-]
+    },
+];
 
 export function setupTestdata() {
     setPersons(persons);

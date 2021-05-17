@@ -2,7 +2,7 @@ declare const UI_MODE: string;
 
 export enum UIMode {
     Development,
-    Production
+    Production,
 }
 
 let mode: UIMode | null;

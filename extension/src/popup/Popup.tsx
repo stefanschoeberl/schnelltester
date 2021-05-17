@@ -17,8 +17,8 @@ async function savePerson() {
 }
 
 export class Popup extends React.Component<{}, {
-    persons: Array<Person>,
-    pageInfo?: TestPage,
+    persons: Person[];
+    pageInfo?: TestPage;
 }> {
 
     constructor(p: {}) {
@@ -26,13 +26,13 @@ export class Popup extends React.Component<{}, {
         this.state = {
             persons: [],
             pageInfo: undefined,
-        }
+        };
     }
 
     async componentDidMount() {
         addOnChangedListener(this.reloadData);
         this.setState({
-            pageInfo: await getCurrentPageInfo()
+            pageInfo: await getCurrentPageInfo(),
         });
         await this.reloadData();
     }
@@ -53,10 +53,10 @@ export class Popup extends React.Component<{}, {
 
     renderBookmarkSection() {
         return <div className="list-group">
-            {supportedPages.map((page) =>
-                <button onClick={() => openTab(page.url)} type="button"
+            {supportedPages.map((page) => (
+                <button key={page.url} onClick={() => openTab(page.url)} type="button"
                         className="list-group-item list-group-item-action list-group-item-default w-100">{page.name}</button>
-            )}
+            ))}
         </div>;
     }
 
@@ -70,7 +70,7 @@ export class Popup extends React.Component<{}, {
                             onFill={fillPerson}
                             onDelete={deletePersonAt}
                 />
-                {this.state.persons.length == 0 && <>
+                {this.state.persons.length === 0 && <>
                     <p>Noch keine Daten gespeichert.</p>
                     <p>Zum Speichern einer Person zunächst das Anmeldeformular ausfüllen und vor dem Abschicken auf "Eingegebene Daten speichern" klicken.</p>
                 </>}
@@ -92,11 +92,11 @@ export class Popup extends React.Component<{}, {
             <p>Der Schnelltester ist ein privat entwickeltes und quelloffenes Projekt ohne Profitabsicht und steht in <b>keiner</b> Verbindung zu irgendeiner staatlichen, politischen oder gesundheitlichen Institution oder Organisation.</p>
             <p><b>Bitte keinesfalls bei Fragen, Problemen oder Verbesserungsvorschlägen, die den Schnelltester betreffen, die offiziellen Hotlines, Einrichtungen oder Behörden kontaktieren!</b></p>
             <p>Für Fragen, Probleme oder Verbesserungsvorschläge ist folgender Issue-Tracker vorgesehen: <a href="#" onClick={() => openTab("https://github.com/stefanschoeberl/schnelltester/issues")}>https://github.com/stefanschoeberl/schnelltester/issues</a></p>
-        </>
+        </>;
     }
 
     render() {
-        const flag = <img src="austria-flag.svg" alt="Österreich Flagge" style={{width: "1.2em", verticalAlign: "baseline"}} />
+        const flag = <img src="austria-flag.svg" alt="Österreich Flagge" style={{width: "1.2em", verticalAlign: "baseline"}} />;
         return <div className="p-3" style={{cursor: "default", userSelect: "none"}}>
             <h1 className="text-center position-relative">{flag} Schnelltester
                 {uiMode === UIMode.Development && <span className="badge bg-info position-absolute top-0 end-0">DEV</span>}

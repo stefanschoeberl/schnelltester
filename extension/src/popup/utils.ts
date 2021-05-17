@@ -15,7 +15,7 @@ export async function getCurrentPageInfo(): Promise<TestPage|undefined> {
 }
 
 export async function sendMessageToCurrentTab(message: Message) {
-    let [tab] = await chrome.tabs.query({active: true, currentWindow: true});
+    const [tab] = await chrome.tabs.query({active: true, currentWindow: true});
     if (tab.id) {
         chrome.tabs.sendMessage(tab.id, message);
     }

@@ -1,7 +1,7 @@
 export type TestPage = {
-    name: string,
-    url: string,
-    regex: RegExp,
+    name: string;
+    url: string;
+    regex: RegExp;
 };
 
 export const supportedPages: TestPage[] = [

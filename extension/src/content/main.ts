@@ -59,7 +59,7 @@ function setSexDropdown(gender: Gender) {
     let label: string;
     switch (gender) {
         case Gender.Male:
-            label = "Männlich"
+            label = "Männlich";
             break;
         case Gender.Female:
             label = "Weiblich";
@@ -145,7 +145,7 @@ async function saveForm() {
         mobileNumberForNotification: getTextfieldById("MobileNumber"),
         email: getTextfieldById("Email"),
         contact: contact,
-    }
+    };
 
     const persons = await getPersons();
     persons.push(person);

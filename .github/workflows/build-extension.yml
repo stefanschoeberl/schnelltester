@@ -11,6 +11,7 @@ jobs:
         run: |
           cd extension
           npm install
+          npm run lint
           npm run build-prod
       - name: Archive schnelltester.zip
         uses: actions/upload-artifact@v2
