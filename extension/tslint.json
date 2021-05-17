@@ -9,7 +9,8 @@
     "object-literal-shorthand": false,
     "semicolon": [
       true,
-      "always"
+      "always",
+      "strict-bound-class-methods"
     ],
     "type-literal-delimiter": true,
     "max-classes-per-file": false,

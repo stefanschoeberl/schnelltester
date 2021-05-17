@@ -49,7 +49,7 @@ export class Popup extends React.Component<{}, {
         this.setState({
             persons: await getPersons(),
         });
-    }
+    };
 
     renderBookmarkSection() {
         return <div className="list-group">
@@ -64,7 +64,8 @@ export class Popup extends React.Component<{}, {
         if (this.isPageSupported()) {
             return <>
                 <button onClick={savePerson} type="button"
-                        className="btn btn-success w-100 mt-3">Eingegebene Daten speichern</button>
+                        className="btn btn-success w-100 mt-3">Eingegebene Daten speichern
+                </button>
                 <h2 className="mt-3">Gespeicherte Personen</h2>
                 <PersonList persons={this.state.persons}
                             onFill={fillPerson}
@@ -72,7 +73,8 @@ export class Popup extends React.Component<{}, {
                 />
                 {this.state.persons.length === 0 && <>
                     <p>Noch keine Daten gespeichert.</p>
-                    <p>Zum Speichern einer Person zunächst das Anmeldeformular ausfüllen und vor dem Abschicken auf "Eingegebene Daten speichern" klicken.</p>
+                    <p>Zum Speichern einer Person zunächst das Anmeldeformular ausfüllen und vor dem Abschicken auf
+                        "Eingegebene Daten speichern" klicken.</p>
                 </>}
 
                 <h2 className="mt-3">Anmeldeportal wechseln</h2>
@@ -82,24 +84,36 @@ export class Popup extends React.Component<{}, {
             return <>
                 <h2 className="mt-3">Anmeldung starten</h2>
                 {this.renderBookmarkSection()}
-                <p className="mt-3"><b>Hinweis:</b> Derzeit unterstützt der Schnelltester die Bundesländer Niederösterreich, Salzburg, Tirol, Vorarlberg, Wien und die Burgenländischen Impf- und Testzentren (BITZ) <b>nicht</b>.</p>
+                <p className="mt-3"><b>Hinweis:</b> Derzeit unterstützt der Schnelltester die Bundesländer
+                    Niederösterreich, Salzburg, Tirol, Vorarlberg, Wien und die Burgenländischen Impf- und Testzentren
+                    (BITZ) <b>nicht</b>.</p>
             </>;
         }
     }
 
     renderSupportInfoSection() {
         return <>
-            <p>Der Schnelltester ist ein privat entwickeltes und quelloffenes Projekt ohne Profitabsicht und steht in <b>keiner</b> Verbindung zu irgendeiner staatlichen, politischen oder gesundheitlichen Institution oder Organisation.</p>
-            <p><b>Bitte keinesfalls bei Fragen, Problemen oder Verbesserungsvorschlägen, die den Schnelltester betreffen, die offiziellen Hotlines, Einrichtungen oder Behörden kontaktieren!</b></p>
-            <p>Für Fragen, Probleme oder Verbesserungsvorschläge ist folgender Issue-Tracker vorgesehen: <a href="#" onClick={() => openTab("https://github.com/stefanschoeberl/schnelltester/issues")}>https://github.com/stefanschoeberl/schnelltester/issues</a></p>
+            <p>Der Schnelltester ist ein privat entwickeltes und quelloffenes Projekt ohne Profitabsicht und steht
+                in <b>keiner</b> Verbindung zu irgendeiner staatlichen, politischen oder gesundheitlichen Institution
+                oder Organisation.</p>
+            <p><b>Bitte keinesfalls bei Fragen, Problemen oder Verbesserungsvorschlägen, die den Schnelltester
+                betreffen, die offiziellen Hotlines, Einrichtungen oder Behörden kontaktieren!</b></p>
+            <p>Für Fragen, Probleme oder Verbesserungsvorschläge ist folgender Issue-Tracker vorgesehen:
+                <a href="#"
+                   onClick={() => openTab("https://github.com/stefanschoeberl/schnelltester/issues")}>
+                    https://github.com/stefanschoeberl/schnelltester/issues
+                </a>
+            </p>
         </>;
     }
 
     render() {
-        const flag = <img src="austria-flag.svg" alt="Österreich Flagge" style={{width: "1.2em", verticalAlign: "baseline"}} />;
+        const flag = <img src="austria-flag.svg" alt="Österreich Flagge"
+                          style={{width: "1.2em", verticalAlign: "baseline"}}/>;
         return <div className="p-3" style={{cursor: "default", userSelect: "none"}}>
             <h1 className="text-center position-relative">{flag} Schnelltester
-                {uiMode === UIMode.Development && <span className="badge bg-info position-absolute top-0 end-0">DEV</span>}
+                {uiMode === UIMode.Development &&
+                <span className="badge bg-info position-absolute top-0 end-0">DEV</span>}
             </h1>
             {this.renderContent()}
             <hr/>

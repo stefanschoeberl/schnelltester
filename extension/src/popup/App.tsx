@@ -4,6 +4,6 @@ import {Popup} from "./Popup";
 
 ReactDOM.render(
     <React.StrictMode>
-        <Popup />
+        <Popup/>
     </React.StrictMode>,
-document.getElementById('root'));
+    document.getElementById('root'));

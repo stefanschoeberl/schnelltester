@@ -14,19 +14,19 @@ type PersonEntryProps = {
 class PersonEntry extends React.Component<PersonEntryProps, {}> {
 
     renderDeleteConfirmation() {
-            return <div className="d-flex align-items-center mt-2">
-                <div className="flex-fill">Endgültig löschen?</div>
-                <div className="btn-group btn-group-sm" role="group">
-                    <button type="button"
-                            onClick={() => this.props.onDelete()}
-                            className="btn btn-danger btn-sm">Ja
-                    </button>
-                    <button type="button"
-                            onClick={() => this.props.onAbortDelete()}
-                            className="btn btn-secondary btn-sm">Nein
-                    </button>
-                </div>
-            </div>;
+        return <div className="d-flex align-items-center mt-2">
+            <div className="flex-fill">Endgültig löschen?</div>
+            <div className="btn-group btn-group-sm" role="group">
+                <button type="button"
+                        onClick={() => this.props.onDelete()}
+                        className="btn btn-danger btn-sm">Ja
+                </button>
+                <button type="button"
+                        onClick={() => this.props.onAbortDelete()}
+                        className="btn btn-secondary btn-sm">Nein
+                </button>
+            </div>
+        </div>;
     }
 
     render() {

@@ -5,7 +5,7 @@ export function openTab(url: string) {
     chrome.tabs.create({url: url});
 }
 
-export async function getCurrentPageInfo(): Promise<TestPage|undefined> {
+export async function getCurrentPageInfo(): Promise<TestPage | undefined> {
     const [tab] = await chrome.tabs.query({active: true, currentWindow: true});
     if (tab.id) {
         return supportedPages.find((page) => tab.url!!.match(page.regex));
