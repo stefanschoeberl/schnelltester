@@ -5,3 +5,4 @@ updates:
     directory: "/extension/"
     schedule:
       interval: "daily"
+    target_branch: "dev"
