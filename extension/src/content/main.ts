@@ -21,14 +21,6 @@ function getTextfieldById(id: string): string {
     return (document.getElementById(id)! as HTMLInputElement).value;
 }
 
-function setTextfieldByPlaceholder(placeholder: string, value: string) {
-    setValue(document.querySelector(`input[type='text'][placeholder='${placeholder}']`)! as HTMLInputElement, value);
-}
-
-function getTextfieldByPlaceholder(placeholder: string): string {
-    return (document.querySelector(`input[type='text'][placeholder='${placeholder}']`)! as HTMLInputElement).value;
-}
-
 function setValue(element: HTMLInputElement, value: string) {
     element.value = value;
     element.dispatchEvent(new Event("input"));
@@ -55,33 +47,47 @@ function getContactType(): ContactType | undefined {
 }
 
 function setSexDropdown(gender: Gender) {
-    (document.getElementById("sex")!.firstChild! as HTMLElement).click();
-    let label: string;
+    const selectElement = document.getElementById("Sex")! as HTMLSelectElement;
+
+    let optionText: string;
     switch (gender) {
         case Gender.Male:
-            label = "Männlich";
+            optionText = "Männlich";
             break;
         case Gender.Female:
-            label = "Weiblich";
+            optionText = "Weiblich";
             break;
         case Gender.Diverse:
-            label = "Divers";
+            optionText = "Divers";
             break;
     }
 
-    (document.querySelector(`#sex li[aria-label='${label}']`)! as HTMLElement).click();
+    let optionElement: HTMLOptionElement | null = null;
+
+    for (const child of Array.from(selectElement.children)) {
+        if (child.innerHTML.includes(optionText)) {
+            optionElement = child as HTMLOptionElement;
+        }
+    }
+
+    if (optionElement) {
+        selectElement.value = optionElement.value;
+        selectElement.dispatchEvent(new Event('change'));
+    }
 }
 
 function getSexDropdown(): Gender | undefined {
-    switch (document.querySelector("#sex input")!.getAttribute("aria-label")) {
-        case "Männlich":
-            return Gender.Male;
-        case "Weiblich":
-            return Gender.Female;
-        case "Divers":
-            return Gender.Diverse;
-        default:
-            return undefined;
+    const select = document.getElementById("Sex")! as HTMLSelectElement;
+    const selectedOption = select.querySelector(`option[value="${select.value}"]`)!;
+
+    if (selectedOption.innerHTML.includes("Männlich")) {
+        return Gender.Male;
+    } else if (selectedOption.innerHTML.includes("Weiblich")) {
+        return Gender.Female;
+    } else if (selectedOption.innerHTML.includes("Divers")) {
+        return Gender.Diverse;
+    } else {
+        return undefined;
     }
 }
 
@@ -95,13 +101,26 @@ async function fillForm(personIndex: number) {
     setTextfieldById("DoorNr", person.doorNr);
     setTextfieldById("StairNr", person.stairNr);
     setTextfieldById("PostalCode", person.postalCode);
-    setTextfieldById("municipality", person.city);
-    setTextfieldById("phoneNumber", person.phoneNumberForContact);
+    setTextfieldById("Municipality", person.city);
+    setTextfieldById("PhoneNumber", person.phoneNumberForContact);
     setTextfieldById("MobileNumber", person.mobileNumberForNotification);
     setTextfieldById("Email", person.email);
 
-    setTextfieldByPlaceholder("XXXX", person.ssn);
-    setTextfieldByPlaceholder("TT.MM.JJJJ", person.birthday);
+    const birthdayDay = person.birthday.substr(0, 2);
+    const birthdayMonth = person.birthday.substr(3, 2);
+    const birthdayYear = person.birthday.substr(6, 4);
+
+    setTextfieldById("BirthDate_day", birthdayDay);
+    setTextfieldById("BirthDate_month", birthdayMonth);
+    setTextfieldById("BirthDate_year", birthdayYear);
+
+    if (person.ssn.length === 4) {
+        setTextfieldById("Svnr_SequenceNumber", person.ssn);
+        setTextfieldById("Svnr_BirthDate", `${birthdayDay}${birthdayMonth}${birthdayYear.substr(2)}`);
+    } else {
+        setTextfieldById("Svnr_SequenceNumber", person.ssn.substr(0, 4));
+        setTextfieldById("Svnr_BirthDate", person.ssn.substr(4, 6));
+    }
 
     switch (person.contact) {
         case ContactType.Email:
@@ -129,19 +148,23 @@ async function saveForm() {
         return;
     }
 
+    const birthdayDay = getTextfieldById("BirthDate_day").padStart(2, "0");
+    const birthdayMonth = getTextfieldById("BirthDate_month").padStart(2, "0");
+    const birthdayYear = getTextfieldById("BirthDate_year");
+
     const person: Person = {
         firstName: getTextfieldById("PreName"),
         lastName: getTextfieldById("SurName"),
-        birthday: getTextfieldByPlaceholder("TT.MM.JJJJ"),
+        birthday: `${birthdayDay}.${birthdayMonth}.${birthdayYear}`,
         gender: gender,
-        ssn: getTextfieldByPlaceholder("XXXX"),
+        ssn: `${getTextfieldById("Svnr_SequenceNumber")}${getTextfieldById("Svnr_BirthDate")}`,
         street: getTextfieldById("Street"),
         buildingNr: getTextfieldById("BuildingNr"),
         doorNr: getTextfieldById("DoorNr"),
         stairNr: getTextfieldById("StairNr"),
         postalCode: getTextfieldById("PostalCode"),
-        city: getTextfieldById("municipality"),
-        phoneNumberForContact: getTextfieldById("phoneNumber"),
+        city: getTextfieldById("Municipality"),
+        phoneNumberForContact: getTextfieldById("PhoneNumber"),
         mobileNumberForNotification: getTextfieldById("MobileNumber"),
         email: getTextfieldById("Email"),
         contact: contact,
