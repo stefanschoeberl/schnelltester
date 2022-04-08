@@ -14,7 +14,7 @@
     "@types/chrome": "0.0.180",
     "@types/react": "18.0.0",
     "@types/react-dom": "17.0.9",
-    "copy-webpack-plugin": "9.0.1",
+    "copy-webpack-plugin": "10.2.4",
     "css-loader": "6.7.1",
     "style-loader": "3.3.1",
     "ts-loader": "9.2.8",
