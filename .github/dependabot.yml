@@ -1,8 +1,0 @@
-version: 2
-
-updates:
-  - package-ecosystem: "npm"
-    directory: "/extension/"
-    schedule:
-      interval: "daily"
-    target-branch: "dev"
